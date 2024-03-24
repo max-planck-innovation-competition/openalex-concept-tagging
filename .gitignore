@@ -6,3 +6,4 @@ deploy.sh
 .pw-docker-registry
 *.pkl
 model
+.idea
