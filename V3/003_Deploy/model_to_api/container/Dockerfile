@@ -33,10 +33,11 @@ ENV PATH="/opt/program:${PATH}"
 ENV LOG4J_FORMAT_MSG_NO_LOOKUPS=true
 
 # 4. Define the folder where our model files are located
+COPY model /opt/ml/model
 
 # 5. Define the folder where our inference code is located
 COPY mag_model /opt/program
 WORKDIR /opt/program
 
-ENTRYPOINT ["/bin/python3"]
+ENTRYPOINT ["/bin/python3", "serve"]
 

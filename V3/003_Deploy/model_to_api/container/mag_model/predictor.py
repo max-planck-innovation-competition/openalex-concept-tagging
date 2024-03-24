@@ -61,7 +61,7 @@ encoding_layer = tf.keras.layers.experimental.preprocessing.CategoryEncoding(
     max_tokens=len(target_vocab)+1, output_mode="binary", sparse=False)
 
 # Load the model components
-raw_model = tf.keras.models.load_model(os.path.join(model_path, 'mag_model_V2'), compile=False)
+raw_model = tf.keras.models.load_model(os.path.join(model_path, 'mag_model_V3'), compile=False)
 raw_model.trainable = False
 
 print("Loaded raw model")
@@ -252,7 +252,13 @@ def transformation():
             tag_scores.append(pred_score_dict.get(added_tag, 0.0))
             tag_ids.append(tag_id_vocab.get(added_tag))
             
-        all_tags.append({"work_id": paper_id, "tags": tags, "scores": tag_scores, "tag_ids": tag_ids})
+        all_tags.append({
+            "paper_id": paper_id,
+            "tags": tags,
+            "scores": tag_scores,
+            "tag_ids": tag_ids,
+            "chain": pred_ancestors_chains_dict
+        })
 
     # Transform predictions to JSON
     result = json.dumps(all_tags)
